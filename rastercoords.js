@@ -28,14 +28,15 @@
    * @param {L.map} map - the map used
    * @param {Array} imgsize - [ width, height ] image dimensions
    * @param {Number} [tilesize] - tilesize in pixels. Default=256
+   * @param {boolean} setMapMaxBounds - auto setMaxBounds on map
    */
-  L.RasterCoords = function (map, imgsize, tilesize) {
+  L.RasterCoords = function (map, imgsize, tilesize, setMapMaxBounds = true) {
     this.map = map
     this.width = imgsize[0]
     this.height = imgsize[1]
     this.tilesize = tilesize || 256
     this.zoom = this.zoomLevel()
-    if (this.width && this.height) {
+    if (setMapMaxBounds && this.width && this.height) {
       this.setMaxBounds()
     }
   }
@@ -46,10 +47,10 @@
      */
     zoomLevel: function () {
       return Math.ceil(
-        Math.log(
-          Math.max(this.width, this.height) /
-          this.tilesize
-        ) / Math.log(2)
+          Math.log(
+              Math.max(this.width, this.height) /
+              this.tilesize
+          ) / Math.log(2)
       )
     },
     /**
